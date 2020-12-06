@@ -4,7 +4,7 @@ input = File.readlines('input.txt').map(&:chomp)
 def binary(input)
   bin = []
   input.each do |i|
-    bin << if i == 'B' || i == 'R'
+    bin << if i.include?('B') || i.include?('R')
              1
            else
              0
@@ -18,8 +18,9 @@ list = []
 input.each do |item|
   row = item[0..6].split(//)
   column = item[7..10].split(//)
-  p row = binary(row).join.to_i(2)
-  p column = binary(column).join.to_i(2)
+
+  row = binary(row).join.to_i(2)
+  column = binary(column).join.to_i(2)
   list << [row, column]
 end
 
@@ -29,4 +30,13 @@ list.each do |l|
   seat_id << l[0] * 8 + l[1]
 end
 
-p seat_id.sort
+p seat_id.sort!
+
+# find my seat in list of seats
+i = seat_id[0]
+
+seat_id.each do |seat|
+  return p i unless i == seat
+
+  i += 1
+end
