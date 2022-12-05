@@ -1,3 +1,6 @@
+# Advent of Code 2022
+My goal for this year, is to reach atleast day 10 and finish the coding exercises. 
+
 # Advent of Code 2021
 It is December again and therefore the Advent of Code of 2021 has begun!
 
