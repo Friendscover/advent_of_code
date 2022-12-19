@@ -8,20 +8,11 @@ def main
   # filter crane moves for input
   crane_moves = parse_crane_moves(crane_moves)
 
-  ## initialize stacks
-  stacks = []
+  first_stacks = initialize_stacks
+  second_stacks = initialize_stacks
 
-  stacks << %w[Q F M R L W C V]
-  stacks << %w[D Q L]
-  stacks << %w[P S R G W C N B]
-  stacks << %w[L C D H B Q G]
-  stacks << %w[V G L F Z S]
-  stacks << %w[D G N P]
-  stacks << %w[D Z P V F C W]
-  stacks << %w[C P D M S]
-  stacks << %w[Z N W T V M P C]
-
-  p move_crates(crane_moves, stacks)
+  p move_crates(crane_moves, first_stacks, 'false')
+  p move_crates(crane_moves, second_stacks, 'true')
 end
 
 def parse_crane_moves(crane_moves)
@@ -41,7 +32,24 @@ def parse_crane_moves(crane_moves)
   return_array
 end
 
-def move_crates(moves, stacks)
+def initialize_stacks
+  ## initialize stacks
+  stacks = []
+
+  stacks << %w[Q F M R L W C V]
+  stacks << %w[D Q L]
+  stacks << %w[P S R G W C N B]
+  stacks << %w[L C D H B Q G]
+  stacks << %w[V G L F Z S]
+  stacks << %w[D G N P]
+  stacks << %w[D Z P V F C W]
+  stacks << %w[C P D M S]
+  stacks << %w[Z N W T V M P C]
+
+  stacks
+end
+
+def move_crates(moves, stacks, multiple)
   rearranged_stacks = stacks
 
   moves.each do |move|
@@ -55,7 +63,7 @@ def move_crates(moves, stacks)
     moving_crates = rearranged_stacks[stack - 1].pop(amount)
 
     # reversing the array to let the last crate be the first
-    moving_crates.reverse!
+    p moving_crates.reverse! if multiple == 'false'
 
     moving_crates.each do |crate|
       rearranged_stacks[destination - 1] << crate
