@@ -50,6 +50,19 @@ def main
   end
 
   p result.sum
+
+  # part 2
+  free_directories = []
+  free_size = 70_000_000 - @file_tree[0].size
+  required_file_size = 30_000_000
+
+  required_file_size -= free_size
+
+  @file_tree.each do |node|
+    free_directories << node.size if node.size > required_file_size
+  end
+
+  p free_directories.min
 end
 
 def parse_command(instruction)
