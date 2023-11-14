@@ -6,126 +6,101 @@
 # 99
 
 def main
-    input = File.readlines('input.txt').map(&:chomp)
+  input = File.readlines('input.txt').map(&:chomp)
 
-    number_array = []
-    @tree_counter = 0
-    debug_counter = 0
+  number_array = []
+  @tree_counter = 0
 
-    input.each do |item|
-        number_array << item.split(//).map{ |i| i.to_i }
+  input.each do |item|
+    number_array << item.split(//).map(&:to_i)
+  end
+
+  number_array.each_with_index do |row, row_index|
+    row.each_with_index do |item, item_index|
+      if check_horizontal_positive(row_index, item_index, item, number_array)
+        @tree_counter += 1
+      elsif check_horizontal_negative(row_index, item_index, item, number_array)
+        @tree_counter += 1
+      elsif check_vertical_positive(row_index, item_index, item, number_array)
+        @tree_counter += 1
+      elsif check_vertical_negative(row_index, item_index, item, number_array)
+        @tree_counter += 1
+      end
+
+      p @tree_counter
     end
-
-    number_array.each_with_index do |row, row_index|
-        row.each_with_index do |item, item_index|
-            position = Array.new
-            position << row_index
-            position << item_index
-
-            if check_horizontal_positive(position[0], position[1], item, number_array)
-                @tree_counter +=1
-            elsif check_horizontal_negative(position[0], position[1], item, number_array)
-                @tree_counter +=1
-            elsif check_vertical_positive(position[0], position[1], item, number_array)
-                @tree_counter +=1
-            elsif check_vertical_negative(position[0], position[1], item, number_array)
-                @tree_counter +=1
-            else
-
-            end 
-
-            p @tree_counter
-            p debug_counter += 1
-        end
-    end
+  end
 end
 
-# position[0] = row 
+# position[0] = row
 # position[1] = column
 
 def check_horizontal_positive(row, column, value, array)
-    # top/bot row
-    if row == 0 || row == 98
-        return true
-    else
-        # set the counter to the initial value of the position
-        column_counter = column
+  # top/bot row
+  return true if [0, 98].include?(row)
 
-        # check positive horizontal
-        column_counter += 1
+  # check positive horizontal
+  column += 1
 
-        until column_counter > 98
-            counting_value = array[row][column_counter] 
+  until column > 98
+    counting_value = array[row][column]
 
-            if counting_value >= value
-                return false
-            else
-                column_counter += 1
-            end
-        end
+    return false if counting_value >= value
 
-        return true
-    end
+    column += 1
+
+  end
+
+  true
 end
 
 def check_horizontal_negative(row, column, value, array)
-    column_counter = column 
+  column -= 1
 
-    column_counter -= 1
+  until column < 0
+    counting_value = array[row][column]
 
-    until column_counter < 0
-        counting_value = array[row][column_counter] 
+    return false if counting_value >= value
 
-        if counting_value >= value
-            return false
-        else
-            column_counter -= 1
-        end
-    end
+    column -= 1
 
-    return true
+  end
+
+  true
 end
 
 def check_vertical_positive(row, column, value, array)
-    # left/right column
-    if column == 0 || column == 98
-        return true
-    else
-        # set the counter to the initial value of the position
-        row_counter = row
+  # left/right column
+  return true if [0, 98].include?(column)
 
-        row_counter += 1
+  # set the counter to the initial value of the position
+  row += 1
 
-        until row_counter > 98
-            counting_value = array[row_counter][column] 
+  until row > 98
+    counting_value = array[row][column]
 
-            if counting_value >= value
-                return false
-            else
-                row_counter += 1
-            end
-        end
+    return false if counting_value >= value
 
-        return true
-    end
+    row += 1
+
+  end
+
+  true
 end
 
 def check_vertical_negative(row, column, value, array)
-    row_counter = row 
+  row -= 1
 
-    row_counter -= 1
+  until row < 0
+    counting_value = array[row][column]
 
-    until row_counter < 0
-        counting_value = array[row_counter][column] 
+    return false if counting_value >= value
 
-        if counting_value >= value
-            return false
-        else
-            row_counter -= 1
-        end
-    end
+    row -= 1
 
-    return true
+  end
+
+  true
 end
 
 main
