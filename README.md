@@ -1,3 +1,6 @@
+# Advent of Code 2023
+This year I try to reach atleast the 14th day of Advent of Code. I'm starting a bit late but I am planning to finish this goal in the first half of 2024!
+
 # Advent of Code 2022
 My goal for this year, is to reach atleast day 10 and finish the coding exercises. 
 
